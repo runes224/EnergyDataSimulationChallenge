@@ -1,0 +1,29 @@
+h1 エネルギーの一覧
+
+table
+  thead
+    tr
+      th ID
+      th Label
+      th House
+      th Year
+      th Month
+      th Temperature
+      th Daylight
+      th EnergyProdction
+  tbody
+    - @energies.each do |energy|
+      tr
+        td = energy.id
+        td = energy.label
+        td = energy.house_id
+        td = energy.year
+        td = energy.month
+        td = energy.temperature
+        td = energy.daylight
+        td = energy.energy_production
+
+h2 インポートする
+= form_tag import_energies_path, multipart: true do
+  = file_field_tag :file
+  = submit_tag "インポート"
