@@ -12,12 +12,15 @@ gem 'coffee-rails', '~> 4.2'
 gem 'turbolinks', '~> 5'
 gem 'jbuilder', '~> 2.5'
 gem 'bootsnap', '>= 1.1.0', require: false
+# slim
 gem 'slim-rails'
+# BULK INSERT
 gem 'activerecord-import'
+# CSVファイルを読み込む機能を追加
 gem 'roo'
-gem 'byebug'
-gem 'pry-byebug', group: :development
+# グラフ描画用
 gem "chartkick"
+# インデックスを貼った方が良いカラムを抽出
 gem "lol_dba"
 
 group :development, :test do
@@ -25,6 +28,8 @@ group :development, :test do
 end
 
 group :development do
+  gem 'byebug'
+  gem 'pry-byebug', group: :development
   gem 'web-console', '>= 3.3.0'
   gem 'listen', '>= 3.0.5', '< 3.2'
   gem 'spring'

@@ -1,19 +1,24 @@
 class HousesController < ApplicationController
+  before_action :set_house, only: %(show)
   def index
     @houses = House.all
   end
 
   def show
-    @house = House.find_by(id: params[:id])
-    # 「year」カラムの値を取得し、昇順に並び替え
-    years = Energy.all.group(:year).pluck(:year).sort
-    @chart_energies = years.map {|year| [year, Energy.chart_by_year(year, params[:id]).sum(:energy_production)]}.to_h
-    @chart_energies_avg = years.map {|year| [year, Energy.group(:month).average(:energy_production)]}.to_h
-    @chart_daylights = years.map {|year| [year, Energy.chart_by_year(year, params[:id]).sum(:daylight)]}.to_h
+    years = Energy.years
+    @chart_energies = Energy.chart_energies_production(params[:id])
+    @chart_energies_avg = Energy.chart_energies_average(params[:id])
+    @chart_daylights = Energy.chart_daylight(params[:id])
   end
 
   def import
     House.import(params[:file])
-    redirect_to energies_path
+    redirect_to energy_houses_path
+  end
+
+  private
+
+  def set_house
+    @house = House.find(params[:id])
   end
 end

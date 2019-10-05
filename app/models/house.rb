@@ -2,10 +2,13 @@ class House < ApplicationRecord
   has_many :energies
 
   def self.import(file)
-    CSV.foreach(file.path, headers: true) do |row|
+    CSV.foreach(file.path,
+                headers: true,
+                header_converters: ->(h) {h.try(:downcase)}
+    ) do |row|
       house = find_by(id: row["id"]) || new
       house.attributes = row.to_hash.slice(*updatable_attributes)
-      house.save
+      house.save!
     end
   end
 
