@@ -1,4 +1,8 @@
 class Energy < ApplicationRecord
+  belongs_to :house
+
+  scope :chart_by_year, -> (year, house) {where(house: house, year: year).group(:month)}
+
   def self.import(file)
     CSV.foreach(file.path, headers: true) do |row|
       energy = find_by(id: row["id"]) || new
