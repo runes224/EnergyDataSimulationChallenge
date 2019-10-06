@@ -22,18 +22,15 @@ class Energy < ApplicationRecord
   end
 
   def self.import(file)
-    CSV.foreach(file.path,
-                headers: true,
-                header_converters: ->(h) {h.try(:downcase).try(:gsub, 'house', 'house_id').try(:gsub, 'energy', 'energy_')}
-    ) do |row|
-      energy = find_by(id: row["id"]) || new
-      energy.attributes = row.to_hash.slice(*updatable_attributes)
-      energy.save!
+    transaction do
+      CSV.foreach(file.path,
+                  headers: true,
+                  header_converters: ->(h) {h.try(:downcase).try(:gsub, 'house', 'house_id').try(:gsub, 'energy', 'energy_')}
+      ) do |row|
+        energy = find_by(id: row["id"]) || new
+        energy.attributes = row.to_hash.slice(*UPDATABLE_ATTRIBUTES)
+        energy.save!
+      end
     end
-  end
-
-  # 更新を許可するカラムを定義
-  def self.updatable_attributes
-    ["id", "label", "house_id", "year", "month", "temperature", "daylight", "energy_production"]
   end
 end
