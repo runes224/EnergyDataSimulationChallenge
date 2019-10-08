@@ -4,8 +4,8 @@ hr
 - @chart_energies.each do |key, value|
   h2 #{key}の月別合計値
   = line_chart [{name: "#{@house.firstname}家のエネルギー生産量", data: value},
-                {name: "#{@house.city}の平均エネルギー生産量", data: @chart_energies_avg[key]},
-                {name: "#{@house.city}の平均日射量", data: @chart_daylights[key]}]
+          {name: "#{@house.city}の平均エネルギー生産量", data: @chart_energies_avg[key]},
+          {name: "#{@house.city}の平均日射量", data: @chart_daylights[key]}]
 br
 table border="1"
   thead

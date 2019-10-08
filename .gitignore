@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 *.rbc
 capybara-*.html
 .rspec
@@ -48,14 +47,3 @@ bower.json
 
 # Ignore node_modules
 node_modules/
-=======
-# mac
-.DS_Store
-
-# data files
-data/user/user_*.csv
-
-# ruby/python version
-.ruby-version
-.python-version
->>>>>>> origin/master
